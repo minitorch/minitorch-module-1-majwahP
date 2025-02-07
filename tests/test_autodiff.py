@@ -4,6 +4,8 @@ import pytest
 
 import minitorch
 from minitorch import Context, ScalarFunction, ScalarHistory
+from minitorch.autodiff import topological_sort
+
 
 # ## Task 1.3 - Tests for the autodifferentiation machinery.
 
@@ -14,6 +16,7 @@ class Function1(ScalarFunction):
     @staticmethod
     def forward(ctx: Context, x: float, y: float) -> float:
         "$f(x, y) = x + y + 10$"
+        ctx.save_for_backward(x, y)
         return x + y + 10
 
     @staticmethod
@@ -141,3 +144,7 @@ def test_backprop4() -> None:
     var4 = Function1.apply(var2, var3)
     var4.backward(d_output=5)
     assert var0.derivative == 10
+
+
+
+
