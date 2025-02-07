@@ -52,7 +52,8 @@ class Linear(minitorch.Module):
             output = self.bias[b].value
             for i in range(len(inputs)):
                 output += inputs[i]*self.weights[i][b].value
-        outputs.append(output)
+            outputs.append(output)
+        return outputs
 
 
 
